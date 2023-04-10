@@ -24,30 +24,22 @@
 
         <div class="col-lg-6 mx-auto">
 
-
             <p class="lead mb-4 text-center">Welcome to the The Cook-Off Cooking competition</p>
 
             <div class="col-lg-6 mx-auto">
-                <form method="post">
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Username :</label>
-                        <input class="form-control" id="username" placeholder="name@example.com" required>
+                <form method="post" action="login.php">
+                    <label for="email" class="form-label">Username :</label>
+                    <input class="form-control" id="username" name ="username" placeholder="name@example.com" required>
                     
-                    </div>
-
+                    <label for="password" class="form-label">Password :</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password :</label>
-                        <input type="password" class="form-control" id="password" placeholder="password" required>
-
-                        <div class="mb-3">
-                            <p><a href="register.html">Don't have an account?</a></p>
-                        </div>
-
-                        <div class="mb-3 p-4 text-center">
-                            <button type="submit" class="btn btn-primary btn-lg px-4 ">Login</button>
-                        </div>
+                        <p><a href="register.html">Don't have an account?</a></p>
                     </div>
+                    <div class="mb-3 p-4 text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-4 ">Login</button>
+                    </div>
+                    
                 </form>
             </div>
         </div>
