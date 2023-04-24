@@ -26,7 +26,7 @@
     $result1 = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result1)>0){
-        header("Location:http://localhost/ProjectWeb/WebProgProject/adminmain.html");
+        header("Location:adminmain.html");
         $_SESSION['username'] = $username;
     }
 
@@ -34,7 +34,7 @@
     $result2 = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result2)>0){
-        header("Location:http://localhost/ProjectWeb/WebProgProject/main.html");
+        header("Location:main.html");
         $_SESSION['username'] = $username;
     }
 
