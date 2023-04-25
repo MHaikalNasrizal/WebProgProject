@@ -15,13 +15,6 @@
     $username=$_POST['username'];
     $pwd=$_POST['password'];
 
-    echo 'Name: '.$username;
-
-    echo '<br>Age:  '.$pwd;
-
-
-
-
     $sql = "SELECT * FROM table1 WHERE `Username` ='$username' AND `Role` = 'Admin' AND `Password` ='".md5($pwd)."' ";
     $result1 = mysqli_query($conn, $sql);
 
