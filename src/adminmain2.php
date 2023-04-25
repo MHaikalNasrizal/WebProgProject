@@ -1,3 +1,37 @@
+<?php 
+    /*session_start(); 
+    if(isset($_SESSION['username'])){
+    
+
+
+    }else{
+        echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
+        die();
+
+    }
+    */
+    $servername = "localhost";
+    $userdb = "root";
+    $passworddb = "";
+    $dbname = "database1";
+    $conn = mysqli_connect($servername,$userdb,$passworddb, $dbname);
+
+    if (!$conn){
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    
+    if(isset($_POST['search'])){
+      
+    }else{
+
+    }
+    $value=$_POST['search'];
+    
+    $sql = "SELECT * FROM table1 WHERE `Username` LIKE '%$value%' ";
+    $result = mysqli_query($conn, $sql);
+
+   
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,14 +50,14 @@
     <title>Admin page</title>
   </head>
 
-  <body>
+  <body class="d-flex flex-nowrap">
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
     <div
-      class="d-flex flex-column d-flex flex-column flex-shrink-0 p-3 text-white bg-dark p-3 text-white bg-dark"
+      class="d-flex flex-column d-flex flex-column flex-shrink-0 p-3 text-white bg-dark p-3 text-white bg-dark "
       style="width: 280px; height: 100vh"
     >
       <a
@@ -35,21 +69,21 @@
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="adminmain.html" class="nav-link text-white"> Home </a>
+          <a href="adminmain.php" class="nav-link text-white"> Home </a>
         </li>
         <li>
-          <a href="adminmain2.html" class="nav-link active" aria-current="page">
+          <a href="adminmain2.php" class="nav-link active" aria-current="page">
             View & Search user
           </a>
         </li>
 
         <li>
-          <a href="adminmain3.html" class="nav-link text-white">
+          <a href="adminmain3.php" class="nav-link text-white">
             Add Category
           </a>
         </li>
         <li>
-          <a href="adminmain4.html" class="nav-link text-white"> Set quota </a>
+          <a href="adminmain4.php" class="nav-link text-white"> Set quota </a>
         </li>
       </ul>
       <hr />
@@ -71,6 +105,13 @@
           <li><a class="dropdown-item" href="#">Sign out</a></li>
         </ul>
       </div>
+    </div>
+    <div class="container offset-2 p-3">
+      <h1>Search User</h1>
+      <form action="adminmain2.php" method="POST">
+        <input id="search" name="search" type="text" placeholder="Type here">
+        <input id="submit" type="submit" value="Search">
+      </form>
     </div>
   </body>
 </html>
