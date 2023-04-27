@@ -21,97 +21,128 @@
     }
     
     if(isset($_POST['search'])){
-      
-    }else{
 
+      $value=$_POST['search'];
+
+      $sql = "SELECT table1.id_User,table1.Username,table1.Email, table1.Role,category1.Category FROM table1 INNER JOIN category1 ON table1.id_Category = category1.id_Category WHERE CONCAT(`Username`,`Email`,`Role`,`Category`) LIKE '%$value%' ";
+      $result = mysqli_query($conn, $sql);
     }
-    $value=$_POST['search'];
-    
-    $sql = "SELECT * FROM table1 WHERE `Username` LIKE '%$value%' ";
-    $result = mysqli_query($conn, $sql);
 
-   
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-      crossorigin="anonymous"
-    />
 
-    <link rel="stylesheet" href="styles.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
 
-    <title>Admin page</title>
-  </head>
+  <link rel="stylesheet" href="styles.css" />
 
-  <body class="d-flex flex-nowrap">
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-      crossorigin="anonymous"
-    ></script>
-    <div
-      class="d-flex flex-column d-flex flex-column flex-shrink-0 p-3 text-white bg-dark p-3 text-white bg-dark "
-      style="width: 280px; height: 100vh"
-    >
-      <a
-        href="#"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-      >
-        <span class="fs-4">Admin</span>
+  <title>Admin page</title>
+</head>
+
+<body class="d-flex flex-nowrap">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark p-3 text-white bg-dark "
+    style="width: 280px; min-height: 100vh;">
+    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <span class="fs-4">Admin</span>
+    </a>
+    <hr />
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="adminmain.php" class="nav-link text-white"> Home </a>
+      </li>
+      <li>
+        <a href="adminmain2.php" class="nav-link active" aria-current="page">View & Search user</a>
+      </li>
+      <li>
+        <a href="adminmain3.php" class="nav-link text-white">Add Category</a>
+      </li>
+      <li>
+        <a href="adminmain4.php" class="nav-link text-white">Set quota</a>
+      </li>
+    </ul>
+    <hr />
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <strong>mdo</strong>
       </a>
-      <hr />
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="adminmain.php" class="nav-link text-white"> Home </a>
-        </li>
-        <li>
-          <a href="adminmain2.php" class="nav-link active" aria-current="page">
-            View & Search user
-          </a>
-        </li>
-
-        <li>
-          <a href="adminmain3.php" class="nav-link text-white">
-            Add Category
-          </a>
-        </li>
-        <li>
-          <a href="adminmain4.php" class="nav-link text-white"> Set quota </a>
-        </li>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
       </ul>
-      <hr />
-      <div class="dropdown">
-        <a
-          href="#"
-          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-          id="dropdownUser1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <strong>mdo</strong>
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-dark text-small shadow"
-          aria-labelledby="dropdownUser1"
-          style=""
-        >
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
+    </div>
+  </div>
+
+  <div class="container-fluid m-3 p-3 rounded-3 border shadow-lg">
+    <h1>Search Query</h1>
+    <form action="adminmain2.php" method="POST">
+    <div class="row">
+      <div class="col-3">
+        <input  name="search" type="text" placeholder="Search.." class="form-control">
       </div>
+      
+      <div class="col">
+      <input  type="submit" value="Search" class="btn btn-primary">
+      </div>
+      
+    
     </div>
-    <div class="container offset-2 p-3">
-      <h1>Search User</h1>
-      <form action="adminmain2.php" method="POST">
-        <input id="search" name="search" type="text" placeholder="Type here">
-        <input id="submit" type="submit" value="Search">
-      </form>
-    </div>
-  </body>
+    </form>
+    
+      
+      <?php
+      if(isset($result)){
+        if(mysqli_num_rows($result)>0){
+          echo"<table class='table'>";
+          echo"<thead>";
+          echo"<tr>";
+          echo"<th scope='col'>id</th>";
+          echo"<th scope='col'>Username</th>";
+          echo"<th scope='col'>Email</th>";
+          echo"<th scope='col'>Role</th>";
+          echo"<th scope='col'>Category</th>";
+          echo"<th scope='col'>View Details</th>";
+          echo"<th scope='col'>Delete</th>";
+          echo"</tr>";
+          echo"</thead>";
+          echo"<tbody>";
+              
+          while($table = mysqli_fetch_array($result,MYSQLI_NUM)){
+          $id = $table[0];
+          $username = $table[1];
+          $email = $table[2];
+          $Role = $table[3];
+          $Category = $table[4];
+              
+  
+          echo"<tr>";
+          echo "<td>$id</td>";
+          echo "<td>$username</td>";
+          echo "<td>$email</td>";
+          echo "<td>$Role</td>";
+          echo "<td>$Category</td>";
+          echo "<td><form method='POST' action='update.php'><button class='btn btn-secondary'name='update'type='submit' value='$id'>View</button></form></td>";
+          echo "<td><form method='POST' action='delete.php'><button class='btn btn-secondary'name='delete'type='submit' onclick='return myconfirmed()' value='$id'>Delete</button></form></td>";
+          echo"</tr>";
+          echo"</tbody>";
+          echo"</table>";
+          }
+          
+        }else{
+          echo"<h1>No result found.</h1>";
+        }
+      }
+      ?>
+  </div>
+</body>
+
 </html>

@@ -21,7 +21,7 @@
     }
     
     
-    $sql = "SELECT * FROM table1 ";
+    $sql = "SELECT table1.id_User,table1.Username,table1.Email, table1.Role,category1.Category FROM table1 INNER JOIN category1 ON table1.id_Category = category1.id_Category;";
     $result = mysqli_query($conn, $sql);
    
 ?>
@@ -58,14 +58,8 @@
       }
     </script>
 
-    <div
-      class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark "
-      style="width: 280px; height: 100vh"
-    >
-      <a
-        href="#"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-      >
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark " style="width: 280px; min-height: 100vh;">
+      <a href="#"class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <span class="fs-4">Admin</span>
       </a>
 
@@ -73,14 +67,10 @@
 
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="adminmain.php" class="nav-link active" aria-current="page"
-            >Home</a
-          >
+          <a href="adminmain.php" class="nav-link active" aria-current="page">Home</a>
         </li>
         <li>
-          <a href="adminmain2.php" class="nav-link text-white"
-            >View & Search user</a
-          >
+          <a href="adminmain2.php" class="nav-link text-white">View & Search user</a>
         </li>
         <li>
           <a href="adminmain3.php" class="nav-link text-white">Add Category</a>
@@ -93,13 +83,7 @@
       <hr />
 
       <div class="dropdown">
-        <a
-          href="#"
-          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-          id="dropdownUser1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <strong>mdo</strong>
         </a>
 
@@ -112,8 +96,9 @@
       </div>
     </div>
 
-    <div class="row offset-2 p-3">
+    <div class="container-fluid m-3 p-3 rounded-3 border shadow-lg">
       <div>
+        <?php if(mysqli_num_rows($result)>0){ ?>
         <h1>List of Registered User</h1>
         <table class="table">
           <thead>
@@ -130,12 +115,13 @@
 
           <tbody>
             <?php 
+            
               while($table = mysqli_fetch_array($result,MYSQLI_NUM)){
               $id = $table[0];
               $username = $table[1];
-              $email = $table[3];
-              $Role = $table[4];
-              $Category = $table[5];
+              $email = $table[2];
+              $Role = $table[3];
+              $Category = $table[4];
             
 
               echo"<tr>";
@@ -148,7 +134,8 @@
               echo "<td><form method='POST' action='delete.php'><button class='btn btn-secondary'name='delete'type='submit' onclick='return myconfirmed()' value='$id'>Delete</button></form></td>";
               echo"</tr>";
         
-              }      
+              }
+            }      
             ?>
           </tbody>
         </table>

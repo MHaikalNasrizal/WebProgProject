@@ -5,17 +5,13 @@
     $dbname = "database1";
     $conn = mysqli_connect($servername,$userdb,$passworddb, $dbname);
 
-
     if (!$conn){
      die("Connection failed: " . mysqli_connect_error());
     }
 
-
     $username=$_POST['username'];
     $pwd=md5($_POST['password']);
     $email=$_POST['email'];
-
-    
 
     $sql = "SELECT * FROM table1 WHERE Username ='$username'";
     $result = mysqli_query($conn, $sql);
@@ -32,7 +28,5 @@
         $conn->close();
 
     }
-
-    
 
 ?>
