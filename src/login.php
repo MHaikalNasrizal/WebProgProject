@@ -19,7 +19,7 @@
     $result1 = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result1)>0){
-        header("Location:adminmain.html");
+        header("Location:adminmain.php");
         $_SESSION['username'] = $username;
     }
 
@@ -30,6 +30,10 @@
         header("Location:main.html");
         $_SESSION['username'] = $username;
     }
+
+    
+    echo "<script>alert('Wrong Username Or Password');document.location.href='index.html';</script>";
+    
     
 
 
