@@ -1,12 +1,46 @@
 @import url(https://fonts.googleapis.com/css?family=Inter);
-
 *{
     font-family: 'Inter',sans-serif;
+    
 }
 body{
-    background-color:  seashell;
+    background-color:  #ffffff;
+    color:#001f25;
+    
 }
 .block{
     display: inline-flex;
 }
 
+
+.bg-dark{
+    background-color: #344955 !important;
+    color:#ffffff;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #ffffff;
+    background-color: #006688;
+}
+
+.btn-secondary{
+    background-color: #c2e8ff;
+    color:#001e2c;
+}
+
+.btn-primary{
+    background-color: #c2e8ff;
+    color:#001e2c;
+    
+}
+
+.btn-danger {
+    color: #410002 !important;
+    background-color: #ffdad6 ; 
+
+}
+
+.nav-link:hover{
+    color: #001e2c;
+    border-bottom: 5px solid #001e2c;
+}

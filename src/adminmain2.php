@@ -1,32 +1,28 @@
-<?php 
-    /*session_start(); 
-    if(isset($_SESSION['username'])){
-    
+<?php
+/*session_start(); 
+if(isset($_SESSION['username'])){
+}else{
+echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
+die();
+}
+*/
+$servername = "localhost";
+$userdb = "root";
+$passworddb = "";
+$dbname = "database1";
+$conn = mysqli_connect($servername, $userdb, $passworddb, $dbname);
 
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
 
-    }else{
-        echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
-        die();
+if (isset($_POST['search'])) {
 
-    }
-    */
-    $servername = "localhost";
-    $userdb = "root";
-    $passworddb = "";
-    $dbname = "database1";
-    $conn = mysqli_connect($servername,$userdb,$passworddb, $dbname);
+  $value = $_POST['search'];
 
-    if (!$conn){
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    
-    if(isset($_POST['search'])){
-
-      $value=$_POST['search'];
-
-      $sql = "SELECT table1.id_User,table1.Username,table1.Email, table1.Role,category1.Category FROM table1 INNER JOIN category1 ON table1.id_Category = category1.id_Category WHERE CONCAT(`Username`,`Email`,`Role`,`Category`) LIKE '%$value%' ";
-      $result = mysqli_query($conn, $sql);
-    }
+  $sql = "SELECT table1.id_User,table1.Username,table1.Email,table1.Role, category1.Category  FROM table1 LEFT JOIN category1 ON table1.id_Category = category1.id_Category WHERE CONCAT(`Username`,`Email`,`Role`) LIKE '%$value%' ";
+  $result = mysqli_query($conn, $sql);
+}
 
 
 ?>
@@ -85,7 +81,7 @@
         <strong>mdo</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
+        <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
       </ul>
     </div>
   </div>
@@ -93,63 +89,114 @@
   <div class="container-fluid m-3 p-3 rounded-3 border shadow-lg">
     <h1>Search Query</h1>
     <form action="adminmain2.php" method="POST">
-    <div class="row">
-      <div class="col-3">
-        <input  name="search" type="text" placeholder="Search.." class="form-control">
+      <div class="row">
+        <div class="col-3">
+          <input name="search" type="text" placeholder="Search.." class="form-control">
+        </div>
+
+        <div class="col">
+          <input type="submit" value="Search" class="btn btn-primary">
+        </div>
+
+
       </div>
-      
-      <div class="col">
-      <input  type="submit" value="Search" class="btn btn-primary">
-      </div>
-      
-    
-    </div>
     </form>
-    
-      
-      <?php
-      if(isset($result)){
-        if(mysqli_num_rows($result)>0){
-          echo"<table class='table'>";
-          echo"<thead>";
-          echo"<tr>";
-          echo"<th scope='col'>id</th>";
-          echo"<th scope='col'>Username</th>";
-          echo"<th scope='col'>Email</th>";
-          echo"<th scope='col'>Role</th>";
-          echo"<th scope='col'>Category</th>";
-          echo"<th scope='col'>View Details</th>";
-          echo"<th scope='col'>Delete</th>";
-          echo"</tr>";
-          echo"</thead>";
-          echo"<tbody>";
-              
-          while($table = mysqli_fetch_array($result,MYSQLI_NUM)){
+
+
+    <?php
+    if (isset($result)) {
+      if (mysqli_num_rows($result) > 0) {
+        echo "<table class='table'>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th scope='col'>id</th>";
+        echo "<th scope='col'>Username</th>";
+        echo "<th scope='col'>Email</th>";
+        echo "<th scope='col'>Role</th>";
+        echo "<th scope='col'>Category</th>";
+        echo "<th scope='col'>View Details</th>";
+        echo "<th scope='col'>Delete</th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+
+        while ($table = mysqli_fetch_array($result, MYSQLI_NUM)) {
           $id = $table[0];
           $username = $table[1];
           $email = $table[2];
           $Role = $table[3];
           $Category = $table[4];
-              
-  
-          echo"<tr>";
+
+          echo "<tr>";
           echo "<td>$id</td>";
           echo "<td>$username</td>";
           echo "<td>$email</td>";
           echo "<td>$Role</td>";
           echo "<td>$Category</td>";
-          echo "<td><form method='POST' action='update.php'><button class='btn btn-secondary'name='update'type='submit' value='$id'>View</button></form></td>";
-          echo "<td><form method='POST' action='delete.php'><button class='btn btn-secondary'name='delete'type='submit' onclick='return myconfirmed()' value='$id'>Delete</button></form></td>";
-          echo"</tr>";
-          }
-          
-        }else{
-          echo"<h1>No result found.</h1>";
+          echo "<td><button class='btn btn-secondary'name='update'type='submit' data-bs-toggle='modal' data-bs-target='#exampleModal$id' value='$id'>View</button></td>";
+          echo "<td><form method='POST' action='delete.php'><button class='btn btn-danger'name='delete'type='submit' onclick='return myconfirmed()' value='$id'>Delete</button></form></td>";
+          echo "</tr>";
+
+          ?>
+          <div class="modal fade" id="exampleModal<?php echo $id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">View User Details</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="row m-3">
+                    <strong>User Id:</strong>
+                    <p>
+                      <?php echo "$table[0]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <strong>Username :</strong>
+                    <p>
+                      <?php echo "$table[1]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <strong>Email :</strong>
+                    <p>
+                      <?php echo "$table[2]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <strong>Role :</strong>
+                    <p>
+                      <?php echo "$table[3]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <strong>Category :</strong>
+                    <p>
+                      <?php echo "$table[4]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <?php
         }
+
+      } else {
+        echo "<h1>No result found.</h1>";
       }
-      ?>
-      </tbody>
-        </table>
+    }
+    ?>
+    </tbody>
+    </table>
   </div>
 </body>
 
