@@ -12,8 +12,24 @@ $passworddb = "";
 $dbname = "database1";
 $conn = mysqli_connect($servername, $userdb, $passworddb, $dbname);
 
+
+
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
+}
+if (isset($_POST['update'])) {
+  //$user = $_SESSION['username'];
+  $id_update = $_POST['update'];
+
+
+  $sql = "UPDATE `table1` SET id_Category = '$id_update' WHERE Username=''";
+  if ($conn->query($sql) === TRUE) {
+    // echo "<script>alert('Sucessfully Join'); document.location.href = 'main2.php';</script>";
+
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+
 }
 
 
@@ -36,6 +52,14 @@ $result = mysqli_query($conn, $sql);
 </head>
 
 <body>
+  <script>
+    function myconfirmed() {
+      if (confirm("Are you sure you to Join This Event?") == true) {
+      } else {
+        return false;
+      }
+    }
+  </script>
   <header class="top-fixed">
     <div class="px-3 py-2 bg-dark">
       <div class="container">
@@ -56,13 +80,18 @@ $result = mysqli_query($conn, $sql);
               <a href="#" class="nav-link text-white"> View/Edit Profile </a>
             </li>
             <li>
-              <a href="#" class="nav-link text-white"> Log-out</a>
+              <a href="logout.php" class="nav-link text-white"> Log-out</a>
             </li>
           </ul>
         </div>
       </div>
     </div>
   </header>
+  <div class="container-fluid m-3">
+    <h1>Event List</h1>
+    <div class=lead>User can only join only 1 event</div>
+  </div>
+
   <?php if (mysqli_num_rows($result) > 0) {
 
     while ($table = mysqli_fetch_array($result, MYSQLI_NUM)) {
@@ -71,10 +100,11 @@ $result = mysqli_query($conn, $sql);
       $Quota = $table[2];
       $Dercription = $table[3];
 
-
-
+      $sql_count = "SELECT * FROM table1 WHERE id_Category = $id";
+      $count = mysqli_num_rows(mysqli_query($conn, $sql_count));
 
       ?>
+
 
       <div class="row m-3">
         <div class="card">
@@ -85,7 +115,24 @@ $result = mysqli_query($conn, $sql);
             <p class="card-text">
               <?php echo "$Dercription" ?>
             </p>
-            <a href="#" class="btn btn-primary">Join Now!</a>
+            <p class="card-text">
+              Limit to <strong>
+                <?php echo "$Quota" ?>
+              </strong> People!
+            </p>
+            <p class="card-text">
+              Participanting : <strong>
+                <?php echo "$count" ?>
+              </strong>
+            </p>
+            <?php
+            if ($count > $Quota) {
+              echo "<button href='#' class='btn btn-primary' disabled>Full!</button>";
+            } else {
+              echo "<form method='POST' action='main2.php'><button class='btn btn-primary'name='update'type='submit' onclick='return myconfirmed()' value='$id'>Join Now!</button></form>";
+            }
+
+            ?>
           </div>
         </div>
       </div>

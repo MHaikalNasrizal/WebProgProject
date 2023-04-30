@@ -31,7 +31,7 @@
               <a href="#" class="nav-link text-white"> View/Edit Profile </a>
             </li>
             <li>
-              <a href="#" class="nav-link text-white"> Log-out</a>
+              <a href="logout.php" class="nav-link text-white"> Log-out</a>
             </li>
           </ul>
         </div>
