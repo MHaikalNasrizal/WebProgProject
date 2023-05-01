@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['username'])) {
+} else {
+  echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
+  die();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,31 +22,7 @@
 </head>
 
 <body>
-  <header class="top-fixed">
-    <div class="px-3 py-2 bg-dark">
-      <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="#" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-            <img src="../public/logo.png" alt="logo" width="100" height="100" />
-          </a>
-          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-            <li>
-              <a href="main.php" class="nav-link text-white active"> Main </a>
-            </li>
-            <li>
-              <a href="main2.php" class="nav-link text-white"> Register Category </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white"> View/Edit Profile </a>
-            </li>
-            <li>
-              <a href="logout.php" class="nav-link text-white"> Log-out</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </header>
+  <?php include 'header.php'; ?>
 </body>
 
 </html>

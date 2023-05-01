@@ -1,11 +1,11 @@
 <?php
-/*session_start(); 
-if(isset($_SESSION['username'])){
-}else{
-echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
-die();
+session_start();
+if (isset($_SESSION['username'])) {
+} else {
+  echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
+  die();
 }
-*/
+
 $servername = "localhost";
 $userdb = "root";
 $passworddb = "";
@@ -18,13 +18,13 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 if (isset($_POST['update'])) {
-  //$user = $_SESSION['username'];
+  $user = $_SESSION['username'];
   $id_update = $_POST['update'];
 
 
-  $sql = "UPDATE `table1` SET id_Category = '$id_update' WHERE Username=''";
+  $sql = "UPDATE `table1` SET id_Category = '$id_update' WHERE Username='$user'";
   if ($conn->query($sql) === TRUE) {
-    // echo "<script>alert('Sucessfully Join'); document.location.href = 'main2.php';</script>";
+    echo "<script>alert('Sucessfully Join'); document.location.href = 'main2.php';</script>";
 
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
@@ -33,7 +33,7 @@ if (isset($_POST['update'])) {
 }
 
 
-$sql = "SELECT * FROM category1";
+$sql = "SELECT * FROM category1 WHERE NOT id_Category=1";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -60,33 +60,7 @@ $result = mysqli_query($conn, $sql);
       }
     }
   </script>
-  <header class="top-fixed">
-    <div class="px-3 py-2 bg-dark">
-      <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="#" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-            <img src="../public/logo.png" alt="logo" width="100" height="100" />
-          </a>
-          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-            <li>
-              <a href="main.php" class="nav-link text-white"> Main </a>
-            </li>
-            <li>
-              <a href="main2.php" class="nav-link text-white active">
-                Register Category
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white"> View/Edit Profile </a>
-            </li>
-            <li>
-              <a href="logout.php" class="nav-link text-white"> Log-out</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </header>
+  <?php include 'header.php'; ?>
   <div class="container-fluid m-3">
     <h1>Event List</h1>
     <div class=lead>User can only join only 1 event</div>
@@ -100,7 +74,7 @@ $result = mysqli_query($conn, $sql);
       $Quota = $table[2];
       $Dercription = $table[3];
 
-      $sql_count = "SELECT * FROM table1 WHERE id_Category = $id";
+      $sql_count = "SELECT * FROM table1 WHERE id_Category = $id ";
       $count = mysqli_num_rows(mysqli_query($conn, $sql_count));
 
       ?>

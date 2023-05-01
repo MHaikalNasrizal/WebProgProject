@@ -1,11 +1,11 @@
 <?php
-/*session_start(); 
-if(isset($_SESSION['username'])){
-}else{
-echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
-die();
+session_start();
+if (isset($_SESSION['username'])) {
+} else {
+  echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
+  die();
 }
-*/
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
