@@ -2,7 +2,7 @@
 session_start();
 if (isset($_SESSION['username'])) {
 } else {
-  echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
+  echo "<script>alert('Session Ended .Please Login');document.location.href='index.html';</script>";
   die();
 }
 

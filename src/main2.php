@@ -100,7 +100,7 @@ $result = mysqli_query($conn, $sql);
               </strong>
             </p>
             <?php
-            if ($count > $Quota) {
+            if ($count >= $Quota) {
               echo "<button href='#' class='btn btn-primary' disabled>Full!</button>";
             } else {
               echo "<form method='POST' action='main2.php'><button class='btn btn-primary'name='update'type='submit' onclick='return myconfirmed()' value='$id'>Join Now!</button></form>";
