@@ -12,31 +12,42 @@
     />
     <link rel="stylesheet" href="styles.css" />
 
-    <title>Login</title>
+    <title>Login || The Cook-Off Cooking Competition</title>
+    <style>
+      body {
+        background-image: url('../public/chef3.jpg');
+        color: #FFFFFF;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
   </head>
 
   <body>
-    <div class="px-4 py-4 my-4 shadow-lg bg-light">
-      <div class="text-center">
-        <div class="bg-dark">
-          <img src="../public/logo.png" height="200px" width="200px" />
+    <div class="">
+      <div class="text-center mb-5">
+        <div>
+          <br><br><img src="../public/logo.png" height="200px" width="200px" />
         </div>
-        <h1>Login</h1>
+        <div class="mb-5">
+    
+        </div>    
       </div>
-
-      <div class="col-lg-6 mx-auto">
+      <div></div>
+      <div class="col-lg-4 mx-auto bg-light p-4 text-dark rounded-5 border border-dark shadow">
+        <h1 class="text-center">Login</h1>
         <p class="lead mb-4 text-center">
           Welcome to the The Cook-Off Cooking competition
         </p>
 
-        <div class="col-lg-6 mx-auto bg-light">
+        <div class="col-lg-6 mx-auto  rounde-4">
           <form method="post" action="login.php">
             <label for="email" class="form-label">Username :</label>
             <input
               class="form-control"
               id="username"
               name="username"
-              placeholder="name@example.com"
+              placeholder="E.g JohnDoe"
               required
             />
 
@@ -46,7 +57,7 @@
               class="form-control"
               id="password"
               name="password"
-              placeholder="password"
+              placeholder="JohnDoe123"
               required
             />
             <div class="mb-3">

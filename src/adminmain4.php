@@ -1,11 +1,12 @@
 <?php
 session_start();
-if (isset($_SESSION['username'])) {
+if ((isset($_SESSION['username'])) && $_SESSION['role'] == 'Admin') {
 } else {
   echo "<script>alert('Session Ended .Please Login');document.location.href='Index.html';</script>";
   die();
 }
 
+$name = $_SESSION['username'];
 $servername = "localhost";
 $userdb = "root";
 $passworddb = "";
@@ -45,7 +46,7 @@ $result = mysqli_query($conn, $sql);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
-  <title>Admin page</title>
+  <title>Admin Page || The Cook-Off Cooking Competition</title>
 </head>
 
 <body class="d-flex flex-nowrap">
@@ -76,14 +77,16 @@ $result = mysqli_query($conn, $sql);
         <a href="adminmain3.php" class="nav-link text-white"> Add Category</a>
       </li>
       <li>
-        <a href="adminmain4.php" class="nav-link active" aria-current="page">Set quota</a>
+        <a href="adminmain4.php" class="nav-link active" aria-current="page">Set & Edit Quota</a>
       </li>
     </ul>
     <hr>
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
         data-bs-toggle="dropdown" aria-expanded="false">
-        <strong>mdo</strong>
+        <strong>
+          <?php echo $name; ?>
+        </strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
         <li><a class="dropdown-item" href="logout.php">Sign out</a></li>

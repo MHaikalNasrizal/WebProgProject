@@ -35,7 +35,7 @@ if (isset($_POST['delete1'])) {
     $sql1 = "DELETE FROM category1 WHERE id_Category = $id1";
 
     if ($conn->query($sql1) === TRUE) {
-        echo "<script>alert('Sucessfully Deleted'); document.location.href = 'adminmain1.php';</script>";
+        echo "<script>alert('Sucessfully Deleted'); document.location.href = 'adminmain.php';</script>";
 
     } else {
         echo "Error: " . $sql1 . "<br>" . $conn->error;

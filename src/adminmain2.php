@@ -1,10 +1,12 @@
 <?php
 session_start();
-if (isset($_SESSION['username'])) {
+if ((isset($_SESSION['username'])) && $_SESSION['role'] == 'Admin') {
 } else {
-  echo "<script>alert('Session Ended .Please Login');document.location.href='Index.php';</script>";
+  echo "<script>alert('Session Ended .Please Login');document.location.href='Index.html';</script>";
   die();
 }
+
+$name = $_SESSION['username'];
 
 $servername = "localhost";
 $userdb = "root";
@@ -20,7 +22,11 @@ if (isset($_POST['search'])) {
 
   $value = $_POST['search'];
 
-  $sql = "SELECT table1.id_User,table1.Username,table1.Email,table1.Role, category1.Category  FROM table1 LEFT JOIN category1 ON table1.id_Category = category1.id_Category WHERE CONCAT(`Username`,`Email`,`Role`) LIKE '%$value%' ";
+  $sql = "SELECT table1.id_User,table1.Username,table1.Email, table1.Role, table1.phone, table1.age, table1.address, table1.occupation, category1.Category  
+  FROM table1 LEFT JOIN category1 
+  ON table1.id_Category = category1.id_Category 
+  WHERE CONCAT(`Username`,`Email`,`Role`) LIKE '%$value%' ";
+
   $result = mysqli_query($conn, $sql);
 }
 
@@ -38,7 +44,7 @@ if (isset($_POST['search'])) {
 
   <link rel="stylesheet" href="styles.css" />
 
-  <title>Admin page</title>
+  <title>Admin Page || The Cook-Off Cooking Competition</title>
 </head>
 
 <body class="d-flex flex-nowrap">
@@ -71,14 +77,16 @@ if (isset($_POST['search'])) {
         <a href="adminmain3.php" class="nav-link text-white">Add Category</a>
       </li>
       <li>
-        <a href="adminmain4.php" class="nav-link text-white">Set quota</a>
+        <a href="adminmain4.php" class="nav-link text-white">Set & Edit Quota</a>
       </li>
     </ul>
     <hr />
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
         data-bs-toggle="dropdown" aria-expanded="false">
-        <strong>mdo</strong>
+        <strong>
+          <?php echo $name; ?>
+        </strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
         <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
@@ -87,7 +95,7 @@ if (isset($_POST['search'])) {
   </div>
 
   <div class="container-fluid m-3 p-3 rounded-3 border shadow-lg">
-    <h1>Search Query</h1>
+    <h1>Search Query</h1><br>
     <form action="adminmain2.php" method="POST">
       <div class="row">
         <div class="col-3">
@@ -125,7 +133,11 @@ if (isset($_POST['search'])) {
           $username = $table[1];
           $email = $table[2];
           $Role = $table[3];
-          $Category = $table[4];
+          $phone = $table[4];
+          $age = $table[5];
+          $address = $table[6];
+          $occupation = $table[7];
+          $Category = $table[8];
 
           echo "<tr>";
           echo "<td>$id</td>";
@@ -173,11 +185,37 @@ if (isset($_POST['search'])) {
                     </p>
                   </div>
                   <div class="row m-3">
-                    <strong>Category :</strong>
+                    <strong>Age :</strong>
                     <p>
                       <?php echo "$table[4]"; ?>
                     </p>
                   </div>
+                  <div class="row m-3">
+                    <strong>Phone :</strong>
+                    <p>
+                      <?php echo "$table[5]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <strong>Address :</strong>
+                    <p>
+                      <?php echo "$table[6]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <strong>Occupation :</strong>
+                    <p>
+                      <?php echo "$table[7]"; ?>
+                    </p>
+                  </div>
+                  <div class="row m-3">
+                    <strong>Category :</strong>
+                    <p>
+                      <?php echo "$table[8]"; ?>
+                    </p>
+                  </div>
+
+
                   <div class="row m-3">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                   </div>
@@ -191,7 +229,7 @@ if (isset($_POST['search'])) {
         }
 
       } else {
-        echo "<h1>No result found.</h1>";
+        echo "<br><h3>No result found.</h3>";
       }
     }
     ?>

@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (isset($_SESSION['username'])) {
+if ((isset($_SESSION['username'])) && $_SESSION['role'] == 'Participant') {
+  $name = $_SESSION['username'];
 } else {
-  echo "<script>alert('Session Ended .Please Login');document.location.href='login.html';</script>";
+  echo "<script>alert('Session Ended .Please Login');document.location.href='Index.html';</script>";
   die();
 }
-
 $servername = "localhost";
 $userdb = "root";
 $passworddb = "";
@@ -44,11 +44,11 @@ $result = mysqli_query($conn, $sql);
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" 
+  integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous"><link rel="stylesheet" href="styles.css" />
 
-  <title>Main</title>
+  <title>Register Category || The Cook-Off Cooking Competition</title>
+  
 </head>
 
 <body>
@@ -61,7 +61,7 @@ $result = mysqli_query($conn, $sql);
     }
   </script>
   <?php include 'header.php'; ?>
-  <div class="container-fluid m-3">
+  <div class="container-fluid m-3 bg-light col-3 rounded-2">
     <h1>Event List</h1>
     <div class=lead>User can only join only 1 event</div>
   </div>
@@ -80,7 +80,7 @@ $result = mysqli_query($conn, $sql);
       ?>
 
 
-      <div class="row m-3">
+      <div class="row m-3 ">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
@@ -119,6 +119,8 @@ $result = mysqli_query($conn, $sql);
     echo "<h1>No Upcoming/Ongoing Event</h1>";
   }
   ?>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
+  integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 
 </html>

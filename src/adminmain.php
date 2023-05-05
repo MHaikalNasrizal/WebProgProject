@@ -1,11 +1,13 @@
 <?php
 session_start();
-if (isset($_SESSION['username'])) {
+// Check if user is logged in
+if ((isset($_SESSION['username'])) && $_SESSION['role'] == 'Admin') {
 } else {
   echo "<script>alert('Session Ended .Please Login');document.location.href='Index.html';</script>";
   die();
 }
 
+$name = $_SESSION['username'];
 $servername = "localhost";
 $userdb = "root";
 $passworddb = "";
@@ -17,7 +19,12 @@ if (!$conn) {
 }
 
 
-$sql = "SELECT table1.id_User,table1.Username,table1.Email, table1.Role, category1.Category FROM table1 LEFT JOIN category1 ON table1.id_Category = category1.id_Category ;";
+$sql = 
+
+"SELECT table1.id_User,table1.Username,table1.Email, table1.Role, table1.phone, table1.age, table1.address, table1.occupation, category1.Category 
+FROM table1 LEFT JOIN category1 
+ON table1.id_Category = category1.id_Category ;";
+
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -33,7 +40,7 @@ $result = mysqli_query($conn, $sql);
 
   <link rel="stylesheet" href="styles.css" />
 
-  <title>Admin page</title>
+  <title>Admin Page || The Cook-Off Cooking Competition</title>
 </head>
 
 <body class="d-flex flex-nowrap">
@@ -67,7 +74,7 @@ $result = mysqli_query($conn, $sql);
         <a href="adminmain3.php" class="nav-link text-white">Add Category</a>
       </li>
       <li>
-        <a href="adminmain4.php" class="nav-link text-white">Set quota</a>
+        <a href="adminmain4.php" class="nav-link text-white">Set & Edit Quota</a>
       </li>
     </ul>
 
@@ -76,7 +83,9 @@ $result = mysqli_query($conn, $sql);
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
         data-bs-toggle="dropdown" aria-expanded="false">
-        <strong>mdo</strong>
+        <strong>
+          <?php echo $name; ?>
+        </strong>
       </a>
 
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -110,8 +119,17 @@ $result = mysqli_query($conn, $sql);
               $username = $table[1];
               $email = $table[2];
               $Role = $table[3];
-              $Category = $table[4];
+              $phone = $table[4];
+              $age = $table[5];
+              $address = $table[6];
+              $occupation = $table[7];
+              $Category = $table[8];
 
+              /*
+              "SELECT table1.id_User,table1.Username,table1.Email, table1.Role, table1.phone, table1.age, table1.address, table1.occupation, category1.Category 
+              FROM table1 LEFT JOIN category1 
+              ON table1.id_Category = category1.id_Category ;";
+              */
 
               echo "<tr>";
               echo "<td>$id</td>";
@@ -161,9 +179,33 @@ $result = mysqli_query($conn, $sql);
                         </p>
                       </div>
                       <div class="row m-3">
-                        <strong>Category :</strong>
+                        <strong>Phone :</strong>
                         <p>
                           <?php echo "$table[4]"; ?>
+                        </p>
+                      </div>
+                      <div class="row m-3">
+                        <strong>Age :</strong>
+                        <p>
+                          <?php echo "$table[5]"; ?>
+                        </p>
+                      </div>
+                      <div class="row m-3">
+                        <strong>Address :</strong>
+                        <p>
+                          <?php echo "$table[6]"; ?>
+                        </p>
+                      </div>
+                      <div class="row m-3">
+                        <strong>Occupation :</strong>
+                        <p>
+                          <?php echo "$table[7]"; ?>
+                        </p>
+                      </div>
+                      <div class="row m-3">
+                        <strong>Category :</strong>
+                        <p>
+                          <?php echo "$table[8]"; ?>
                         </p>
                       </div>
                       <div class="row m-3">
